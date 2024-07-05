@@ -17,6 +17,9 @@ const config: Config = {
         elmessiri: ["var(--font-elmessiri)"],
         aeonik: ["var(--font-aeonik)"],
       },
+      backgroundImage: {
+        "hero-bg": 'url("/assets/hero-bg.png")'
+      }
     },
   },
   plugins: [],

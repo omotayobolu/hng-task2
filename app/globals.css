@@ -22,7 +22,16 @@
     @apply text-[2rem] leading-[3.12625rem] font-bold text-primary-black;
   }
 
+  p {
+    @apply text-base font-normal;
+  }
+
   a {
     @apply text-secondary-black text-xl font-light;
+  }
+
+  .hero-bg {
+    background-image: url("../public/assets/hero-bg.png");
+    background-color: rgba(18, 18, 18, 0.2);
   }
 }
