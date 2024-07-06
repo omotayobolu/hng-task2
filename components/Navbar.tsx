@@ -12,7 +12,7 @@ const Navbar = () => {
       <div className="py-[2.1875rem] flex flex-row justify-between">
         <div className="flex flex-row items-center space-x-[8.75rem]">
           <h2 className="uppercase font-elmessiri">timbu</h2>
-          <div className="flex flex-row items-center space-x-12">
+          <div className="lg:flex hidden flex-row items-center space-x-12">
             <Link href="">Home</Link>
             <Link
               href="/"

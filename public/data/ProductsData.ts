@@ -11,16 +11,16 @@ import Product10 from "../assets/product10.png";
 import Product11 from "../assets/product11.png";
 import Product12 from "../assets/product12.png";
 
-interface Product {
+export type ProductType = {
   id: string;
   category: string;
   product: string;
   price: number;
   isFavourite: boolean;
   image: any;
-}
+};
 
-const productsData: Product[] = [
+const productsData: ProductType[] = [
   {
     id: "1",
     category: "dresses",
@@ -47,7 +47,7 @@ const productsData: Product[] = [
   },
   {
     id: "4",
-    category: "jewellry",
+    category: "jewelery",
     product: "Ladies Crystal rings and pendant jewelery set",
     price: 200,
     isFavourite: false,
@@ -80,7 +80,7 @@ const productsData: Product[] = [
   },
   {
     id: "8",
-    category: "jewllry",
+    category: "jewelery",
     product: "Women Chord With Sparkling Zirconia Jewelery Set",
     price: 200,
     isFavourite: false,
@@ -119,3 +119,5 @@ const productsData: Product[] = [
     image: Product12,
   },
 ];
+
+export default productsData;
