@@ -25,7 +25,7 @@ export default function Home() {
       <Navbar />
       <div className=" bg-cover bg-center h-[279px] w-full hero-bg bg-blend-overlay"></div>
       <div className="mt-[2rem]">
-        <div className="flex flex-row items-center justify-between md:mx-[3.75%] mx-[4.2%]">
+        <div className="flex lg:flex-row flex-col lg:items-center lg:space-y-0 space-y-6 items-start justify-between md:mx-[3.75%] mx-[4.2%]">
           <div className="flex flex-row items-center space-x-[1.625rem]">
             <p>Sort by:</p>
             <select
@@ -37,9 +37,9 @@ export default function Home() {
               <option value="High to Low">High to Low</option>
             </select>
           </div>
-          <div className="lg:flex hidden flex-row items-center space-x-8">
+          <div className="flex flex-row items-center lg:space-x-8 space-x-4">
             <button
-              className={`text-xl ${
+              className={`md:text-xl text-sm ${
                 selectedCategory === "All Products"
                   ? "font-medium text-primary-orange"
                   : "font-light text-secondary-black"
@@ -49,7 +49,7 @@ export default function Home() {
               All Products
             </button>
             <button
-              className={`text-xl ${
+              className={`md:text-xl text-sm ${
                 selectedCategory === "Dresses"
                   ? "font-medium text-primary-orange"
                   : "font-light text-secondary-black"
@@ -59,7 +59,7 @@ export default function Home() {
               Dresses
             </button>
             <button
-              className={`text-xl ${
+              className={`md:text-xl text-sm ${
                 selectedCategory === "Jeweleries"
                   ? "font-medium text-primary-orange"
                   : "font-light text-secondary-black"
@@ -69,7 +69,7 @@ export default function Home() {
               Jeweleries
             </button>
             <button
-              className={`text-xl ${
+              className={`md:text-xl text-sm ${
                 selectedCategory === "Shoes"
                   ? "font-medium text-primary-orange"
                   : "font-light text-secondary-black"
@@ -79,7 +79,7 @@ export default function Home() {
               Shoes
             </button>
             <button
-              className={`text-xl ${
+              className={`md:text-xl text-sm ${
                 selectedCategory === "Bags"
                   ? "font-medium text-primary-orange"
                   : "font-light text-secondary-black"
@@ -89,7 +89,7 @@ export default function Home() {
               Bags
             </button>
           </div>
-          <p className="font-light md:block hidden">
+          <p className="font-light lg:block hidden">
             <span className="font-normal">Showing </span>1-20 of 1000 results
           </p>
         </div>
@@ -169,7 +169,7 @@ export default function Home() {
                   alt={product.product}
                   width={297}
                   height={313}
-                  className="max-w-full"
+                  className="w-full"
                 />
                 <div className="pt-2 pr-2.5 pb-[1.125rem] pl-3.5 border-[0.5px] border-solid border-[rgba(79,79,79,0.31)] rounded-[0.5px]">
                   <span className="text-xs uppercase text-grey">
