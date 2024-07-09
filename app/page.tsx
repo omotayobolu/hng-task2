@@ -97,7 +97,7 @@ export default function Home() {
       <div className="mt-[2.5rem] md:mx-[3.125%] mx-[6%] flex flex-row gap-[2.0625rem]">
         <div className="lg:w-[27.7%] lg:block hidden">
           <div className=" pt-[1.8125rem] pr-[2.4375rem] pb-[7.25rem] pl-[2.5rem] border-[0.5px] border-solid border-[rgba(79,79,79,0.3)] rounded-lg">
-            <p className="uppercase">Filter By:</p>
+            <p className="uppercase font-medium">Filter By:</p>
             <div className="flex flex-col mt-[2.4325rem] space-y-[2.4325rem]">
               <div className="flex flex-col space-y-8">
                 <p className="uppercase font-medium">category</p>

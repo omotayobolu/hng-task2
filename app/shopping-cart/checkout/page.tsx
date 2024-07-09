@@ -1,5 +1,7 @@
 "use client";
+import { ChangeEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { IoMdArrowBack } from "react-icons/io";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
@@ -8,6 +10,16 @@ import Link from "next/link";
 
 const page = () => {
   const router = useRouter();
+  const [isCreditCardSelected, setIsCreditCardSelected] =
+    useState<boolean>(false);
+
+  const handlePaymentMethod = (e: ChangeEvent) => {
+    if (e.target.id === "credit-card") {
+      setIsCreditCardSelected(true);
+    } else {
+      setIsCreditCardSelected(false);
+    }
+  };
 
   return (
     <section>
@@ -199,6 +211,143 @@ const page = () => {
                       </label>
                     </div>
                     <p className="font-light text-grey">$0.00</p>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-[4.125rem]">
+                <p className="text-2xl font-medium">Payment Method</p>
+                <div className="mt-6 flex flex-col px-6 py-2.5 border border-solid border-[#CFCFCF] rounded ">
+                  <div className="flex flex-row items-center space-x-3">
+                    <input
+                      type="radio"
+                      name="payment-method"
+                      id="credit-card"
+                      onChange={handlePaymentMethod}
+                    />
+                    <label
+                      htmlFor="credit-card"
+                      className="font-medium text-xl"
+                    >
+                      Credit Card
+                    </label>
+                  </div>
+                  {isCreditCardSelected && (
+                    <>
+                      <div className="mt-5 flex lg:flex-row flex-col lg:space-x-4 space-x-0 space-y-4 lg:space-y-0">
+                        <div className="flex flex-col space-y-2.5 w-full">
+                          <label
+                            htmlFor="card-name"
+                            className="font-normal text-base"
+                          >
+                            Name On Card
+                          </label>
+                          <input
+                            type="text"
+                            id="card-name"
+                            placeholder="Duru Chim"
+                            className="py-4 px-2.5 border-[0.5px] border-solid border-[rgba(79,79,79,0.3)] rounded w-full"
+                          />
+                        </div>
+                        <div className="flex flex-col space-y-2.5 w-full">
+                          <label
+                            htmlFor="card-number"
+                            className="font-normal text-base"
+                          >
+                            Card Number
+                          </label>
+                          <input
+                            type="text"
+                            id="card-number"
+                            placeholder="5555-3333-5566-3453"
+                            pattern="\d{4}-\d{4}-\d{4}-\d{4}"
+                            maxLength={16}
+                            className="py-4 px-2.5 border-[0.5px] border-solid border-[rgba(79,79,79,0.3)] rounded w-full"
+                          />
+                        </div>
+                      </div>
+                      <div className="mt-5 flex lg:flex-row flex-col lg:space-x-4 space-x-0 space-y-4 lg:space-y-0">
+                        <div className="flex flex-col space-y-2.5 w-full">
+                          <label
+                            htmlFor="expiry-date"
+                            className="font-normal text-base"
+                          >
+                            Expiry Date
+                          </label>
+                          <input
+                            type="month"
+                            id="expiry-date"
+                            placeholder="06/23"
+                            className="py-4 px-2.5 border-[0.5px] border-solid border-[rgba(79,79,79,0.3)] rounded w-full"
+                          />
+                        </div>
+                        <div className="flex flex-col space-y-2.5 w-full">
+                          <label
+                            htmlFor="cvv"
+                            className="font-normal text-base"
+                          >
+                            CVV
+                          </label>
+                          <input
+                            type="text"
+                            id="cvv"
+                            placeholder="523"
+                            className="py-4 px-2.5 border-[0.5px] border-solid border-[rgba(79,79,79,0.3)] rounded w-full"
+                          />
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+                <div className="mt-6 flex flex-col px-6 py-2.5 border border-solid border-[#CFCFCF] rounded ">
+                  <div className="flex flex-row items-center justify-between">
+                    <div className="flex flex-row items-center space-x-3">
+                      <input
+                        type="radio"
+                        name="payment-method"
+                        id="paypal"
+                        onChange={handlePaymentMethod}
+                      />
+                      <label htmlFor="paypal" className="font-medium text-xl">
+                        PayPal
+                      </label>
+                    </div>
+                    <Image
+                      src="/assets/paypal.svg"
+                      alt=""
+                      width={74}
+                      height={26}
+                    />
+                  </div>
+                </div>
+                <div className="mt-6 flex flex-col px-6 py-2.5 border border-solid border-[#CFCFCF] rounded ">
+                  <div className="flex flex-row items-center justify-between">
+                    <div className="flex flex-row items-center space-x-3">
+                      <input
+                        type="radio"
+                        name="payment-method"
+                        id="payoneer"
+                        onChange={handlePaymentMethod}
+                      />
+                      <label htmlFor="payoneer" className="font-medium text-xl">
+                        Payoneer
+                      </label>
+                    </div>
+                    <Image
+                      src="/assets/payoneer.svg"
+                      alt=""
+                      width={74}
+                      height={26}
+                    />
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <div className="flex flex-row items-center space-x-3.5 text-xl text-[#161616]">
+                    <input
+                      type="checkbox"
+                      name="save-details"
+                      id="save-details"
+                    />
+                    <label htmlFor="save-details">Save card details</label>
                   </div>
                 </div>
               </div>
