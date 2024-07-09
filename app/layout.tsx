@@ -33,7 +33,7 @@ const aeonik = LocalFont({
 });
 
 export const metadata: Metadata = {
-  title: "Timbu",
+  title: "Timbu Cloud Shop",
   description: "E-commerce store",
 };
 

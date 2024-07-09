@@ -1,34 +1,34 @@
+"use client";
+import {useState} from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { IoSearchSharp } from "react-icons/io5";
-import { FaRegHeart } from "react-icons/fa";
 import { HiOutlineShoppingCart } from "react-icons/hi";
+import { IoIosSearch } from "react-icons/io";
 
 const Navbar = () => {
   const pathname = usePathname();
+  const [] = useState()
   return (
     <header className="mx-[5.7%]">
-      <div className="py-[2.1875rem] flex flex-row justify-between">
-        <div className="flex flex-row items-center space-x-[8.75rem]">
+      <div className="py-[2.1875rem] flex flex-row justify-between space-x-8 items-center">
+        <Link href="/">
           <h2 className="uppercase font-elmessiri">timbu</h2>
-          <div className="lg:flex hidden flex-row items-center space-x-12">
-            <Link href="">Home</Link>
-            <Link
-              href="/"
-              className={`${
-                pathname === "/" ? "text-primary-orange font-medium" : ""
-              }`}
-            >
-              Products
-            </Link>
-            <Link href="">Contact Us</Link>
+        </Link>
+        <div className={`md:block hidden relative w-[712px] max-w-full`}>
+          <input
+            type="text"
+            placeholder="Search Here"
+            className="rounded-lg font-light text-xl w-full max-w-full border border-solid border-[rgba(79,79,79,0.3)] px-[20px] py-2.5"
+          />
+          <div className="bg-primary-orange absolute right-0 top-0 w-[50px] h-[50px] p-2.5 rounded-r-lg">
+            <IoIosSearch className="w-9 h-9 text-white cursor-pointer" />
           </div>
         </div>
         <div className="flex flex-row items-center space-x-8">
-          <IoSearchSharp className="w-6 h-6 text-primary-black cursor-pointer" />
-          <FaRegHeart className="w-6 h-6 text-primary-black cursor-pointer" />
-          <HiOutlineShoppingCart className="w-6 h-6 text-primary-black cursor-pointer" />
+          <Link href="/shopping-cart">
+            <HiOutlineShoppingCart className="w-6 h-6 text-primary-black cursor-pointer" />
+          </Link>
           <Image
             src="/assets/nav-icon.png"
             alt="nav icon"
@@ -37,6 +37,8 @@ const Navbar = () => {
           />
         </div>
       </div>
+      <div></div>
+
     </header>
   );
 };

@@ -31,7 +31,15 @@
   }
 
   input[type="checkbox"] {
-    @apply appearance-none w-[0.875rem] h-[0.875rem] border border-solid border-primary-black rounded-sm bg-white checked:bg-primary-orange checked:border-none;
+    @apply appearance-none w-[0.875rem] h-[0.875rem] border border-solid border-primary-black rounded-sm bg-white checked:bg-primary-orange checked:border-none checked:bg-tick bg-center bg-no-repeat;
+  }
+
+  input[type="radio"] {
+    @apply appearance-none w-4 h-4 bg-white border border-solid border-primary-black checked:border-transparent rounded-full checked:outline checked:outline-primary-orange checked:bg-primary-orange;
+  }
+
+  input[type="radio"] {
+    @apply checked:bg-primary-orange;
   }
 
   input[type="range"] {

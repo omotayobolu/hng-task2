@@ -55,7 +55,6 @@ const Footer = () => {
         </div>
       </div>
       <hr className="bg-[rgba(18,18,18,0.2)] h-[1px]" />
-      <hr />
       <div className="flex flex-row items-center sm:justify-around text-secondary-black pt-[0.875rem] pb-[1.375rem] px-[6.7%]">
         {/* montserrat font */}
         <span>Copyright &copy; {year} TIMBLE</span>

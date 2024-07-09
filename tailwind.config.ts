@@ -11,6 +11,7 @@ const config: Config = {
       colors: {
         "primary-black": "#121212",
         "secondary-black": "#4F4F4F",
+        grey: "rgba(79,79,79,0.6)",
         "primary-orange": "#B05405",
       },
       fontFamily: {
@@ -18,8 +19,9 @@ const config: Config = {
         aeonik: ["var(--font-aeonik)"],
       },
       backgroundImage: {
-        "hero-bg": 'url("/assets/hero-bg.png")'
-      }
+        "hero-bg": 'url("/assets/hero-bg.png")',
+        tick: 'url("/assets/tick.svg")',
+      },
     },
   },
   plugins: [],

@@ -1,13 +1,25 @@
 "use client";
+import { useState } from "react";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
-import ProductsData from "@/public/data/ProductsData";
-import { FaRegHeart } from "react-icons/fa";
+import ProductsData, { ProductType } from "@/public/data/ProductsData";
 import { IoChevronBack } from "react-icons/io5";
 import { IoChevronForward } from "react-icons/io5";
 import Footer from "@/components/Footer";
+import PrimaryButton from "@/components/PrimaryButton";
 
 export default function Home() {
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>("All Products");
+
+  const filteredProducts =
+    selectedCategory === "All Products"
+      ? ProductsData
+      : ProductsData.filter(
+          (product) =>
+            product.category.toLowerCase() === selectedCategory.toLowerCase()
+        );
+
   return (
     <main className="bg-white text-primary-black">
       <Navbar />
@@ -26,20 +38,55 @@ export default function Home() {
             </select>
           </div>
           <div className="lg:flex hidden flex-row items-center space-x-8">
-            <button className="text-xl font-medium text-primary-orange">
+            <button
+              className={`text-xl ${
+                selectedCategory === "All Products"
+                  ? "font-medium text-primary-orange"
+                  : "font-light text-secondary-black"
+              }`}
+              onClick={() => setSelectedCategory("All Products")}
+            >
               All Products
             </button>
-            <button className="text-xl font-light text-secondary-black">
+            <button
+              className={`text-xl ${
+                selectedCategory === "Dresses"
+                  ? "font-medium text-primary-orange"
+                  : "font-light text-secondary-black"
+              }`}
+              onClick={() => setSelectedCategory("Dresses")}
+            >
+              Dresses
+            </button>
+            <button
+              className={`text-xl ${
+                selectedCategory === "Jeweleries"
+                  ? "font-medium text-primary-orange"
+                  : "font-light text-secondary-black"
+              }`}
+              onClick={() => setSelectedCategory("Jeweleries")}
+            >
+              Jeweleries
+            </button>
+            <button
+              className={`text-xl ${
+                selectedCategory === "Shoes"
+                  ? "font-medium text-primary-orange"
+                  : "font-light text-secondary-black"
+              }`}
+              onClick={() => setSelectedCategory("Shoes")}
+            >
               Shoes
             </button>
-            <button className="text-xl font-light text-secondary-black">
-              Clothes
-            </button>
-            <button className="text-xl font-light text-secondary-black">
+            <button
+              className={`text-xl ${
+                selectedCategory === "Bags"
+                  ? "font-medium text-primary-orange"
+                  : "font-light text-secondary-black"
+              }`}
+              onClick={() => setSelectedCategory("Bags")}
+            >
               Bags
-            </button>
-            <button className="text-xl font-light text-secondary-black">
-              Jewelries
             </button>
           </div>
           <p className="font-light md:block hidden">
@@ -50,25 +97,22 @@ export default function Home() {
       <div className="mt-[2.5rem] md:mx-[3.125%] mx-[6%] flex flex-row gap-[2.0625rem]">
         <div className="lg:w-[27.7%] lg:block hidden">
           <div className=" pt-[1.8125rem] pr-[2.4375rem] pb-[7.25rem] pl-[2.5rem] border-[0.5px] border-solid border-[rgba(79,79,79,0.3)] rounded-lg">
-            <div className="flex flex-col space-y-[2.4325rem]">
+            <p className="uppercase">Filter By:</p>
+            <div className="flex flex-col mt-[2.4325rem] space-y-[2.4325rem]">
               <div className="flex flex-col space-y-8">
                 <p className="uppercase font-medium">category</p>
                 <div className="flex flex-col space-y-5">
                   <div className="flex flex-row items-center space-x-[0.4375rem]">
-                    <input type="checkbox" name="dresses" id="dresses" />
-                    <label htmlFor="dresses">Dresses</label>
+                    <input type="checkbox" name="men" id="men" />
+                    <label htmlFor="men">Men</label>
                   </div>
                   <div className="flex flex-row items-center space-x-[0.4375rem]">
-                    <input type="checkbox" name="shoes" id="shoes" />
-                    <label htmlFor="shoes">Shoes</label>
+                    <input type="checkbox" name="women" id="women" />
+                    <label htmlFor="women">Women</label>
                   </div>
                   <div className="flex flex-row items-center space-x-[0.4375rem]">
-                    <input type="checkbox" name="jewelry" id="jewelry" />
-                    <label htmlFor="jewelry">Jewelry</label>
-                  </div>
-                  <div className="flex flex-row items-center space-x-[0.4375rem]">
-                    <input type="checkbox" name="bags" id="bags" />
-                    <label htmlFor="bags">Bags</label>
+                    <input type="checkbox" name="children" id="children" />
+                    <label htmlFor="children">Children</label>
                   </div>
                 </div>
               </div>
@@ -97,29 +141,12 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col space-y-8">
-                <p className="uppercase font-medium">filter by</p>
-                <div className="flex flex-col space-y-5">
-                  <div className="flex flex-row items-center space-x-[0.4375rem]">
-                    <input type="checkbox" name="men" id="men" />
-                    <label htmlFor="men">Men</label>
-                  </div>
-                  <div className="flex flex-row items-center space-x-[0.4375rem]">
-                    <input type="checkbox" name="women" id="women" />
-                    <label htmlFor="women">Women</label>
-                  </div>
-                  <div className="flex flex-row items-center space-x-[0.4375rem]">
-                    <input type="checkbox" name="children" id="children" />
-                    <label htmlFor="children">Children</label>
-                  </div>
-                </div>
-              </div>
               <div className="flex flex-col space-y-[1.375rem]">
                 <div className="flex flex-col space-y-8">
                   <p className="uppercase font-medium">prices</p>
                   <div className="flex flex-row items-center justify-between">
                     <label htmlFor="men">Range</label>
-                    <p className="text-sm">$120 - $300</p>
+                    <p className="text-sm">$120 - $1000</p>
                   </div>
                 </div>
                 <input
@@ -127,57 +154,56 @@ export default function Home() {
                   name="range"
                   id="range"
                   min="120"
-                  max="300"
+                  max="1000"
                 />
               </div>
             </div>
           </div>
         </div>
         <div className="flex flex-col w-full">
-          <div className=" w-full grid gap-x-[1.4375rem] gap-y-[1.125rem] grid-cols-[repeat(auto-fit,minmax(279px,1fr))] place-items-center">
-            {ProductsData.map((product: any) => (
-              <div key={product.key} className="relative">
+          <div className="grid gap-x-[1.4375rem] gap-y-[1.125rem] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center">
+            {filteredProducts.map((product: any) => (
+              <div key={product.id} className="relative w-full">
                 <Image
                   src={product.image}
                   alt={product.product}
                   width={297}
                   height={313}
-                  className="w-full"
+                  className="max-w-full"
                 />
-                <div className="pt-2 pr-2.5 pb-[1.125rem] pl-3.5 border-t-0 border-[0.5px] border-solid border-[rgba(79,79,79,0.31)] rounded-[0.5px]">
-                  <span className="text-xs uppercase text-[rgba(79,79,79,0.6)]">
+                <div className="pt-2 pr-2.5 pb-[1.125rem] pl-3.5 border-[0.5px] border-solid border-[rgba(79,79,79,0.31)] rounded-[0.5px]">
+                  <span className="text-xs uppercase text-grey">
                     {product.category}
                   </span>
                   <p className="mt-1">{product.product}</p>
                   <p className="font-bold mt-3">${product.price}</p>
-                  <button className="w-full mt-5 border border-solid border-[rgba(79,79,79,0.3)] rounded-[4px] py-2.5 px-3 text-secondary-black text-base">
-                    Add to Cart
-                  </button>
+                  <div className="mt-5">
+                    <PrimaryButton>Add to Cart</PrimaryButton>
+                  </div>
                 </div>
-                <FaRegHeart className="absolute top-4 right-2.5 cursor-pointer" />
               </div>
             ))}
           </div>
-          <div className="mt-[4.3125rem] flex flex-row items-center justify-center gap-5 w-full">
-            <button className="w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-[rgba(79,79,79,0.6)] px-5 py-4">
+          <div className="mt-[4.3125rem] md:flex hidden flex-row items-center justify-center gap-5 w-full">
+            <button className="w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-grey px-5 py-4">
               <IoChevronBack />
             </button>
-            <button className="w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-[rgba(79,79,79,0.6)] px-5 py-4">
+            <button className="w-[3.125rem] h-[3.125rem] rounded-md bg-primary-orange text-[#fdfdfd] px-5 py-4">
               1
             </button>
-            <button className="w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-[rgba(79,79,79,0.6)] px-5 py-4">
+            <button className="w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-grey px-5 py-4">
               2
             </button>
-            <button className="w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-[rgba(79,79,79,0.6)] px-5 py-4">
+            <button className="w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-grey px-5 py-4">
               ...
             </button>
-            <button className="w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-[rgba(79,79,79,0.6)] px-5 py-4">
+            <button className="w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-grey px-5 py-4">
               9
             </button>
-            <button className="w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-[rgba(79,79,79,0.6)] px-5 py-4">
+            <button className="w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-grey px-5 py-4">
               10
             </button>
-            <button className="w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-[rgba(79,79,79,0.6)] px-5 py-4">
+            <button className="w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-grey px-5 py-4">
               <IoChevronForward />
             </button>
           </div>
