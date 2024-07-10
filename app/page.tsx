@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import ProductsData, { ProductType } from "@/public/data/ProductsData";
@@ -19,6 +21,20 @@ export default function Home() {
           (product) =>
             product.category.toLowerCase() === selectedCategory.toLowerCase()
         );
+
+  const handleAddToCart = () => {
+    toast("Item added to cart", {
+      position: "top-center",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      type: "success",
+    });
+  };
 
   return (
     <main className="bg-white text-primary-black">
@@ -178,7 +194,9 @@ export default function Home() {
                   <p className="mt-1">{product.product}</p>
                   <p className="font-bold mt-3">${product.price}</p>
                   <div className="mt-5">
-                    <PrimaryButton>Add to Cart</PrimaryButton>
+                    <PrimaryButton onClick={handleAddToCart}>
+                      Add to Cart
+                    </PrimaryButton>
                   </div>
                 </div>
               </div>

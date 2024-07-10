@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { El_Messiri } from "next/font/google";
 import LocalFont from "next/font/local";
 import "./globals.css";
+import ToastProvider from "@/components/ToastContainer";
 
 const elmessiri = El_Messiri({
   subsets: ["latin"],
@@ -49,7 +50,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${elmessiri.variable} ${aeonik.className}`}>
-        {children}
+        <ToastProvider>{children}</ToastProvider>
       </body>
     </html>
   );

@@ -1,5 +1,7 @@
 "use client";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -24,6 +26,20 @@ const page = () => {
           : item
       )
     );
+  };
+
+  const handleRemoveFromCart = () => {
+    toast("Item removed from cart", {
+      position: "top-center",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      type: "success",
+    });
   };
 
   return (
@@ -83,7 +99,10 @@ const page = () => {
                           Colour: {item.color}
                         </span>
                       </div>
-                      <button className="flex flex-row items-center text-[#B82707]">
+                      <button
+                        className="flex flex-row items-center text-[#B82707]"
+                        onClick={handleRemoveFromCart}
+                      >
                         <Icon icon="mdi-light:delete" />
                         <p className="text-sm font-light">Remove</p>
                       </button>
