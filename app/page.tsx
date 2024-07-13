@@ -1,18 +1,52 @@
 "use client";
 import { useState } from "react";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Image from "next/image";
+import useSWR from "swr";
 import Navbar from "@/components/Navbar";
-import ProductsData, { ProductType } from "@/public/data/ProductsData";
+import ProductsData from "@/public/data/ProductsData";
 import { IoChevronBack } from "react-icons/io5";
 import { IoChevronForward } from "react-icons/io5";
 import Footer from "@/components/Footer";
-import PrimaryButton from "@/components/PrimaryButton";
+import useCart from "@/hooks/useCart";
+import Product from "@/components/Product";
+
+export type ProductType = {
+  id: string;
+  product: string;
+  name: string;
+  current_price: any;
+  photos: any;
+};
+
+const fetcher = async (url: string) => {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return response.json();
+};
 
 export default function Home() {
+  const { dispatch, REDUCER_ACTIONS } = useCart();
+
   const [selectedCategory, setSelectedCategory] =
     useState<string>("All Products");
+  const [page, setPage] = useState<number>(1);
+
+  const { data, isLoading, error } = useSWR(
+    `https://timbu-get-all-products.reavdev.workers.dev/?organization_id=3bde8322367d4d9a86665d223bd2d4f8&reverse_sort=false&page=${page}&size=10&Appid=9BY9K0GZHTS2WEV&Apikey=530a32ca4ea14d5ab0e2d02841e8985020240712125048146690`,
+    fetcher
+  );
+
+  const products: ProductType[] = data?.items || [];
+  console.log(products);
+
+  const handleNextPage = () => {
+    setPage((prevPage) => (prevPage < 3 ? prevPage + 1 : prevPage));
+  };
+
+  const handlePreviousPage = () => {
+    setPage(Math.max(page - 1, 1));
+  };
 
   const filteredProducts =
     selectedCategory === "All Products"
@@ -21,20 +55,6 @@ export default function Home() {
           (product) =>
             product.category.toLowerCase() === selectedCategory.toLowerCase()
         );
-
-  const handleAddToCart = () => {
-    toast("Item added to cart", {
-      position: "top-center",
-      autoClose: 4000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      type: "success",
-    });
-  };
 
   return (
     <main className="bg-white text-primary-black">
@@ -177,51 +197,92 @@ export default function Home() {
           </div>
         </div>
         <div className="flex flex-col w-full">
+          {isLoading && <p className="text-center">Loading....</p>}
+          {error && (
+            <p className="text-center text-red-600">
+              An error occured. Try again
+            </p>
+          )}
           <div className="grid gap-x-[1.4375rem] gap-y-[1.125rem] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center">
-            {filteredProducts.map((product: any) => (
-              <div key={product.id} className="relative w-full">
-                <Image
-                  src={product.image}
-                  alt={product.product}
-                  width={297}
-                  height={313}
-                  className="w-full"
-                />
-                <div className="pt-2 pr-2.5 pb-[1.125rem] pl-3.5 border-[0.5px] border-solid border-[rgba(79,79,79,0.31)] rounded-[0.5px]">
-                  <span className="text-xs uppercase text-grey">
-                    {product.category}
-                  </span>
-                  <p className="mt-1">{product.product}</p>
-                  <p className="font-bold mt-3">${product.price}</p>
-                  <div className="mt-5">
-                    <PrimaryButton onClick={handleAddToCart}>
-                      Add to Cart
-                    </PrimaryButton>
-                  </div>
-                </div>
-              </div>
+            {products.map((product: any) => (
+              <Product
+                product={product}
+                dispatch={dispatch}
+                key={product.id}
+                REDUCER_ACTIONS={REDUCER_ACTIONS}
+              />
+              // <div key={product.id} className="relative w-full">
+              //   <Image
+              //     src={`https://api.timbu.cloud/images/${product.photos[0]?.url}`}
+              //     alt={product.name}
+              //     width={297}
+              //     height={313}
+              //     className="w-full"
+              //   />
+              //   <div className="pt-2 pr-2.5 pb-[1.125rem] pl-3.5 border-[0.5px] border-solid border-[rgba(79,79,79,0.31)] rounded-[0.5px]">
+              //     <span className="text-xs uppercase text-grey">
+              //       {product.name.split("-").pop()}
+              //     </span>
+              //     <Link href={`products/${product.id}`}>
+              //       <p className="mt-1">
+              //         {product.name.split(" - ").slice(0, -1).join(" - ")}
+              //       </p>
+              //     </Link>
+              //     <p className="font-bold mt-3">
+              //       ${product.current_price[0].USD}
+              //     </p>
+              //     <div className="mt-5">
+              //       <PrimaryButton onClick={handleAddToCart}>
+              //         Add to Cart
+              //       </PrimaryButton>
+              //     </div>
+              //   </div>
+              // </div>
             ))}
           </div>
           <div className="mt-[4.3125rem] md:flex hidden flex-row items-center justify-center gap-5 w-full">
-            <button className="w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-grey px-5 py-4">
+            <button
+              className="w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-grey px-5 py-4 disabled:opacity-20"
+              onClick={handlePreviousPage}
+              disabled={page === 1}
+            >
               <IoChevronBack />
             </button>
-            <button className="w-[3.125rem] h-[3.125rem] rounded-md bg-primary-orange text-[#fdfdfd] px-5 py-4">
+            <button
+              className={`w-[3.125rem] h-[3.125rem] rounded-md  px-5 py-4 ${
+                page === 1
+                  ? "bg-primary-orange text-[#fdfdfd]"
+                  : "border border-solid border-grey"
+              } `}
+              onClick={() => setPage(1)}
+            >
               1
             </button>
-            <button className="w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-grey px-5 py-4">
+            <button
+              className={`w-[3.125rem] h-[3.125rem] rounded-md  px-5 py-4 ${
+                page === 2
+                  ? "bg-primary-orange text-[#fdfdfd]"
+                  : "border border-solid border-grey"
+              } `}
+              onClick={() => setPage(2)}
+            >
               2
             </button>
-            <button className="w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-grey px-5 py-4">
-              ...
+            <button
+              className={`w-[3.125rem] h-[3.125rem] rounded-md  px-5 py-4 ${
+                page === 3
+                  ? "bg-primary-orange text-[#fdfdfd]"
+                  : "border border-solid border-grey"
+              } `}
+              onClick={() => setPage(3)}
+            >
+              3
             </button>
-            <button className="w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-grey px-5 py-4">
-              9
-            </button>
-            <button className="w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-grey px-5 py-4">
-              10
-            </button>
-            <button className="w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-grey px-5 py-4">
+            <button
+              className="w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-grey px-5 py-4 disabled:opacity-20"
+              onClick={handleNextPage}
+              disabled={page === 3}
+            >
               <IoChevronForward />
             </button>
           </div>
