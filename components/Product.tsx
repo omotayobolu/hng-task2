@@ -6,7 +6,7 @@ import PrimaryButton from "./PrimaryButton";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ProductType } from "@/app/page";
-import { ReducerActionType, ReducerAction } from "../context/CartProvider";
+import { ReducerActionType, ReducerAction } from "@/context/CartProvider";
 
 type PropsType = {
   product: ProductType;
@@ -55,7 +55,7 @@ const Product = ({
             {product.name.split(" - ").slice(0, -1).join(" - ")}
           </p>
         </Link>
-        <p className="font-bold mt-3">${product.current_price[0].USD}</p>
+        <p className="font-bold mt-3">N{product.current_price[0].NGN}</p>
         <div className="mt-5">
           <PrimaryButton onClick={onAddToCart}>Add to Cart</PrimaryButton>
         </div>

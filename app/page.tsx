@@ -211,33 +211,6 @@ export default function Home() {
                 key={product.id}
                 REDUCER_ACTIONS={REDUCER_ACTIONS}
               />
-              // <div key={product.id} className="relative w-full">
-              //   <Image
-              //     src={`https://api.timbu.cloud/images/${product.photos[0]?.url}`}
-              //     alt={product.name}
-              //     width={297}
-              //     height={313}
-              //     className="w-full"
-              //   />
-              //   <div className="pt-2 pr-2.5 pb-[1.125rem] pl-3.5 border-[0.5px] border-solid border-[rgba(79,79,79,0.31)] rounded-[0.5px]">
-              //     <span className="text-xs uppercase text-grey">
-              //       {product.name.split("-").pop()}
-              //     </span>
-              //     <Link href={`products/${product.id}`}>
-              //       <p className="mt-1">
-              //         {product.name.split(" - ").slice(0, -1).join(" - ")}
-              //       </p>
-              //     </Link>
-              //     <p className="font-bold mt-3">
-              //       ${product.current_price[0].USD}
-              //     </p>
-              //     <div className="mt-5">
-              //       <PrimaryButton onClick={handleAddToCart}>
-              //         Add to Cart
-              //       </PrimaryButton>
-              //     </div>
-              //   </div>
-              // </div>
             ))}
           </div>
           <div className="mt-[4.3125rem] md:flex hidden flex-row items-center justify-center gap-5 w-full">
