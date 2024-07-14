@@ -17,9 +17,7 @@ const CartItem = ({ item, REDUCER_ACTIONS, dispatch }: PropsType) => {
   const lineTotal: string = new Intl.NumberFormat("en-NG", {
     style: "currency",
     currency: "NGN",
-  }).format(item.quantity * item.current_price[0]["NGN"][0]);
-
-  const highestQty: number = 20 > item.quantity ? 20 : item.quantity;
+  }).format(item.quantity * item.current_price);
 
   const handleDecrease = () => {
     if (item.quantity > 1) {

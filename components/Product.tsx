@@ -27,7 +27,11 @@ const Product = ({
   const onAddToCart = () => {
     dispatch({
       type: REDUCER_ACTIONS.ADD,
-      payload: { ...product, quantity: 1 },
+      payload: {
+        ...product,
+        quantity: 1,
+        current_price: product.current_price[0]["NGN"][0],
+      },
     });
     toast("Item added to cart", {
       position: "top-center",

@@ -34,10 +34,22 @@ const page = () => {
 
   const { dispatch, REDUCER_ACTIONS } = useCart();
 
+  const [quantityToAdd, setQuantityToAdd] = useState<number>(1);
+
+  const handleDecrease = () => {
+    if (quantityToAdd > 1) {
+      setQuantityToAdd((prevQuantity) => prevQuantity - 1);
+    }
+  };
+
+  const handleIncrease = () => {
+    setQuantityToAdd((prevQuantity) => prevQuantity + 1);
+  };
+
   const onAddToCart = () => {
     dispatch({
       type: REDUCER_ACTIONS.ADD,
-      payload: { ...data, quantity: 1 },
+      payload: { ...data, quantity: quantityToAdd },
     });
     toast("Item added to cart", {
       position: "top-center",
@@ -110,45 +122,21 @@ const page = () => {
                 <div className="md:mt-4 mt-2.5 text-xl grid grid-cols-3 text-grey border border-solid border-grey rounded-[4px] divide-y w-fit">
                   <button
                     className="py-[5px] px-[15px] text-grey"
-                    // onClick={decreaseQuantity}
+                    onClick={handleDecrease}
                   >
                     -
                   </button>
-                  <span className="py-[5px] px-[15px] text-grey ">1</span>
+                  <span className="py-[5px] px-[15px] text-grey ">
+                    {quantityToAdd}
+                  </span>
                   <button
                     className="py-[5px] px-[15px] text-grey"
-                    // onClick={increaseQuantity}
+                    onClick={handleIncrease}
                   >
                     +
                   </button>
                 </div>
               </div>
-              {/* <div className="md:mt-8 mt-4">
-              <p className="font-light text-xl">Colours</p>
-              <div className="md:mt-4 mt-2.5 flex flex-row space-x-2">
-                <button className="h-[2.125rem] w-[2.125rem] rounded-[4px] border border-transparent bg-[#069B10]"></button>
-                <button className="h-[2.125rem] w-[2.125rem] rounded-[4px] border border-transparent bg-[#BC0957]"></button>
-                <button className="h-[2.125rem] w-[2.125rem] rounded-[4px] border border-transparent bg-[#0B069B]"></button>
-                <button className="h-[2.125rem] w-[2.125rem] rounded-[4px] border border-transparent bg-[#BD3706]"></button>
-              </div>
-            </div> */}
-              {/* <div className="md:mt-8 mt-4">
-              <p className="font-light text-xl">Select Size</p>
-              <div className="md:mt-4 mt-2.5 flex flex-row space-x-2">
-                <button className="h-[2.125rem] w-[2.125rem] rounded-[4px] border border-grey border-solid bg-white text-grey">
-                  S
-                </button>
-                <button className="h-[2.125rem] w-[2.125rem] rounded-[4px] border border-transparent bg-primary-orange text-white">
-                  M
-                </button>
-                <button className="h-[2.125rem] w-[2.125rem] rounded-[4px] border border-grey border-solid bg-white text-grey">
-                  L
-                </button>
-                <button className="h-[2.125rem] w-[2.125rem] rounded-[4px] border border-grey border-solid bg-white text-grey">
-                  XL
-                </button>
-              </div>
-            </div> */}
               <div className="mt-[2.6875rem]">
                 <PrimaryButton onClick={onAddToCart}>Add to Cart</PrimaryButton>
               </div>

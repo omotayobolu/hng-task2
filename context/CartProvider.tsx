@@ -11,7 +11,7 @@ import {
 export type CartItemType = {
   id: string;
   name: string;
-  current_price: any;
+  current_price: number;
   quantity: number;
 };
 
@@ -114,9 +114,7 @@ const useCartContext = (initCartState: CartStateType) => {
     currency: "NGN",
   }).format(
     state.cart.reduce((previousValue, cartItem) => {
-      return (
-        previousValue + cartItem.quantity * cartItem.current_price[0]["NGN"][0]
-      );
+      return previousValue + cartItem.quantity * cartItem.current_price;
     }, 0)
   );
 

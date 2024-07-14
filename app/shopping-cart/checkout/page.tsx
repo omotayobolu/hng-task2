@@ -7,11 +7,53 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import PrimaryButton from "@/components/PrimaryButton";
 import Link from "next/link";
+import useCart from "@/hooks/useCart";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const page = () => {
   const router = useRouter();
+  const { dispatch, REDUCER_ACTIONS, totalPrice, totalItems } = useCart();
   const [isCreditCardSelected, setIsCreditCardSelected] =
     useState<boolean>(false);
+
+  const subTotal = Number(totalPrice.replace(/[^\d.-]/g, ""));
+  const tax: number = 0.01 * subTotal;
+  const totalPriceWithTax = subTotal + tax;
+
+  const subTotalFormatted = new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+  }).format(subTotal);
+
+  const taxFormatted = new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+  }).format(tax);
+
+  const totalPriceFormatted = new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+  }).format(totalPriceWithTax);
+
+  const onPlaceOrder = () => {
+    dispatch({
+      type: REDUCER_ACTIONS.CLEAR_ALL,
+    });
+
+    toast("Order placed successfully", {
+      position: "top-center",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      type: "success",
+    });
+    router.push("/");
+  };
 
   const handlePaymentMethod = (e: ChangeEvent) => {
     if (e.target.id === "credit-card") {
@@ -29,7 +71,7 @@ const page = () => {
           className="flex flex-row items-center space-x-1 text-2xl"
           onClick={() => router.back()}
         >
-          <IoMdArrowBack /> Back
+          <IoMdArrowBack /> Back to Cart
         </button>
         <div className="mt-12">
           <p className="text-2xl">Billing Information</p>
@@ -358,11 +400,11 @@ const page = () => {
                 <div className="mt-8 mb-[1.375rem] flex flex-col space-y-6">
                   <div className="flex flex-row items-center justify-between">
                     <p className="text-xl">Items Subtotal</p>
-                    <p className="text-xl">$500</p>
+                    <p className="text-xl">{subTotalFormatted}</p>
                   </div>
                   <div className="flex flex-row items-center justify-between">
                     <p className="text-xl">Tax</p>
-                    <p className="text-xl">$500</p>
+                    <p className="text-xl">{taxFormatted}</p>
                   </div>
                   <div className="flex flex-row items-center justify-between">
                     <p className="text-xl">Shipping Fee</p>
@@ -377,17 +419,16 @@ const page = () => {
                     Total
                   </p>
                   <p className="text-[2rem] leading-[3.12625rem] font-medium">
-                    $500
+                    {totalPriceFormatted}
                   </p>
                 </div>
                 <div className="mt-[2.375rem] flex flex-col items-center space-y-4">
-                  <PrimaryButton>
-                    <Link
-                      href="/shopping-cart/checkout"
-                      className="text-white text-xl"
-                    >
-                      Place Order
-                    </Link>
+                  <PrimaryButton
+                    onClick={onPlaceOrder}
+                    disabled={totalItems === 0}
+                    className="disabled:cursor-not-allowed disabled:bg-grey"
+                  >
+                    Place Order
                   </PrimaryButton>
                   <div className="flex flex-row items-center space-x-3.5">
                     <input type="checkbox" name="agreement" id="agreement" />

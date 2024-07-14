@@ -6,8 +6,8 @@ import Navbar from "@/components/Navbar";
 import { IoMdArrowBack } from "react-icons/io";
 import Footer from "@/components/Footer";
 import PrimaryButton from "@/components/PrimaryButton";
-import useCart from "@/hooks/useCart";
 import CartItem from "@/components/CartItem";
+import useCart from "@/hooks/useCart";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Icon } from "@iconify-icon/react";
@@ -17,9 +17,14 @@ const page = () => {
 
   const { dispatch, REDUCER_ACTIONS, totalItems, totalPrice, cart } = useCart();
 
-  const totalPriceNumber = Number(totalPrice.replace(/[^\d.-]/g, "")); // Using Number()
-  const tax: number = 0.01 * totalPriceNumber;
-  const totalPriceWithTax = totalPriceNumber + tax;
+  const subTotal = Number(totalPrice.replace(/[^\d.-]/g, ""));
+  const tax: number = 0.01 * subTotal;
+  const totalPriceWithTax = subTotal + tax;
+
+  const subTotalFormatted = new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+  }).format(subTotal);
 
   const taxFormatted = new Intl.NumberFormat("en-NG", {
     style: "currency",
@@ -30,18 +35,6 @@ const page = () => {
     style: "currency",
     currency: "NGN",
   }).format(totalPriceWithTax);
-
-  // Add 5000
-
-  // const handleQuantityChange = (id: string, change: number) => {
-  //   setCartItems((prevCartData) =>
-  //     prevCartData.map((item) =>
-  //       item.id === id
-  //         ? { ...item, quantity: Math.max(1, item.quantity + change) }
-  //         : item
-  //     )
-  //   );
-  // };
 
   const clearCart = () => {
     dispatch({
@@ -100,7 +93,7 @@ const page = () => {
                 <div className="mt-8 mb-[1.375rem] flex flex-col space-y-6">
                   <div className="flex flex-row items-center justify-between">
                     <p className="text-xl">Items Subtotal</p>
-                    <p className="text-xl">{totalPrice}</p>
+                    <p className="text-xl">{subTotalFormatted}</p>
                   </div>
                   <div className="flex flex-row items-center justify-between">
                     <p className="text-xl">Tax</p>
@@ -119,14 +112,12 @@ const page = () => {
                   </p>
                 </div>
                 <div className="mt-[2.375rem]">
-                  <PrimaryButton>
-                    <Link
-                      href="/shopping-cart/checkout"
-                      className="text-white text-xl"
-                    >
-                      Check Out
-                    </Link>
-                  </PrimaryButton>
+                  <Link
+                    href="/shopping-cart/checkout"
+                    className="text-white text-xl"
+                  >
+                    <PrimaryButton>Check Out</PrimaryButton>
+                  </Link>
                 </div>
               </div>
             </div>
