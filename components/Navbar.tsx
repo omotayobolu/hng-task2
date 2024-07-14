@@ -1,14 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import { IoIosSearch } from "react-icons/io";
 import { IoMenuOutline, IoCloseOutline } from "react-icons/io5";
+import useCart from "@/hooks/useCart";
 
 const Navbar = () => {
-  const pathname = usePathname();
+  const { totalItems } = useCart();
   const [navOpened, setNavOpened] = useState<boolean>(false);
 
   const toggleNav = () => {
@@ -49,8 +49,13 @@ const Navbar = () => {
             </div>
           </div>
           <div className="flex flex-row items-center space-x-8">
-            <Link href="/shopping-cart">
+            <Link href="/shopping-cart" className="relative">
               <HiOutlineShoppingCart className="w-6 h-6 text-primary-black cursor-pointer" />
+              {totalItems > 0 && (
+                <span className="absolute bg-primary-orange text-white px-2 py-1 text-xs -top-3 -right-3 border border-transparent rounded-full">
+                  {totalItems}
+                </span>
+              )}
             </Link>
             <Image
               src="/assets/nav-icon.png"

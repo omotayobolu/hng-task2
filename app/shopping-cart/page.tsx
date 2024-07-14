@@ -17,6 +17,22 @@ const page = () => {
 
   const { dispatch, REDUCER_ACTIONS, totalItems, totalPrice, cart } = useCart();
 
+  const totalPriceNumber = Number(totalPrice.replace(/[^\d.-]/g, "")); // Using Number()
+  const tax: number = 0.01 * totalPriceNumber;
+  const totalPriceWithTax = totalPriceNumber + tax;
+
+  const taxFormatted = new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+  }).format(tax);
+
+  const totalPriceFormatted = new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+  }).format(totalPriceWithTax);
+
+  // Add 5000
+
   // const handleQuantityChange = (id: string, change: number) => {
   //   setCartItems((prevCartData) =>
   //     prevCartData.map((item) =>
@@ -84,11 +100,11 @@ const page = () => {
                 <div className="mt-8 mb-[1.375rem] flex flex-col space-y-6">
                   <div className="flex flex-row items-center justify-between">
                     <p className="text-xl">Items Subtotal</p>
-                    <p className="text-xl">${totalPrice - 50}</p>
+                    <p className="text-xl">{totalPrice}</p>
                   </div>
                   <div className="flex flex-row items-center justify-between">
                     <p className="text-xl">Tax</p>
-                    <p className="text-xl">$50</p>
+                    <p className="text-xl">{taxFormatted}</p>
                   </div>
                 </div>
               </div>
@@ -99,7 +115,7 @@ const page = () => {
                     Total
                   </p>
                   <p className="text-[2rem] leading-[3.12625rem] font-medium">
-                    {totalPrice}
+                    {totalPriceFormatted}
                   </p>
                 </div>
                 <div className="mt-[2.375rem]">

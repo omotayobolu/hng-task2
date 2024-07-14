@@ -19,6 +19,11 @@ const Product = ({
   dispatch,
   REDUCER_ACTIONS,
 }: PropsType): ReactElement => {
+  const formatPrice: string = new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+  }).format(product.current_price[0]["NGN"][0]);
+
   const onAddToCart = () => {
     dispatch({
       type: REDUCER_ACTIONS.ADD,
@@ -55,7 +60,7 @@ const Product = ({
             {product.name.split(" - ").slice(0, -1).join(" - ")}
           </p>
         </Link>
-        <p className="font-bold mt-3">N{product.current_price[0].NGN}</p>
+        <p className="font-bold mt-3">{formatPrice}</p>
         <div className="mt-5">
           <PrimaryButton onClick={onAddToCart}>Add to Cart</PrimaryButton>
         </div>

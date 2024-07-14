@@ -12,9 +12,6 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useCart from "@/hooks/useCart";
 
-// import { ProductType } from "@/app/page";
-// import { ReducerActionType, ReducerAction } from "@/context/CartProvider";
-
 const fetcher = async (url: string) => {
   const response = await fetch(url);
   if (!response.ok) {
@@ -60,7 +57,10 @@ const page = () => {
     fetcher
   );
 
-  console.log(data);
+  const price = new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+  }).format(data?.current_price);
 
   return (
     <section>
@@ -101,17 +101,10 @@ const page = () => {
               <h2 className="font-light md:text-[2rem] md:leading-[3.12625rem]  text-xl md:mt-0 mt-2.5">
                 {data?.name.split(" - ").slice(0, -1).join(" - ")}
               </h2>
-              <span className="text-2xl font-bold">N{data?.current_price}</span>
+              <span className="text-2xl font-bold">{price}</span>
               <p className="text-sm font-normal text-[rgba(79,79,79,0.72)] md:mt-[1.125rem] mt-1">
                 {data?.description}
               </p>
-              <div className="flex flex-row items-center space-x-2.5 mt-4">
-                <FaStar className="w-6 h-6 text-primary-orange" />
-                <FaStar className="w-6 h-6 text-primary-orange" />
-                <FaStar className="w-6 h-6 text-primary-orange" />
-                <FaStar className="w-6 h-6 text-primary-orange" />
-                <FaRegStar className="w-6 h-6 text-grey" />
-              </div>
               <div className="md:mt-8 mt-4 ">
                 <p className="font-light text-xl">Quantity</p>
                 <div className="md:mt-4 mt-2.5 text-xl grid grid-cols-3 text-grey border border-solid border-grey rounded-[4px] divide-y w-fit">

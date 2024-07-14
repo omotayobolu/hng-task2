@@ -14,9 +14,34 @@ type PropsType = {
 };
 
 const CartItem = ({ item, REDUCER_ACTIONS, dispatch }: PropsType) => {
-  const lineTotal: number = item.quantity * item.current_price;
+  const lineTotal: string = new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+  }).format(item.quantity * item.current_price[0]["NGN"][0]);
 
   const highestQty: number = 20 > item.quantity ? 20 : item.quantity;
+
+  const handleDecrease = () => {
+    if (item.quantity > 1) {
+      dispatch({
+        type: REDUCER_ACTIONS.QUANTITY,
+        payload: {
+          ...item,
+          quantity: item.quantity - 1,
+        },
+      });
+    }
+  };
+
+  const handleIncrease = () => {
+    dispatch({
+      type: REDUCER_ACTIONS.QUANTITY,
+      payload: {
+        ...item,
+        quantity: item.quantity + 1,
+      },
+    });
+  };
 
   const onRemoveFromCart = () => {
     dispatch({
@@ -54,17 +79,23 @@ const CartItem = ({ item, REDUCER_ACTIONS, dispatch }: PropsType) => {
             </p>
             <div className="md:w-auto w-full flex flex-row items-center md:space-x-[2.6875rem] md:justify-normal justify-between">
               <div className="md:mt-4 mt-2.5 text-xl flex flex-row items-center text-grey">
-                <button className="md:py-[5px] md:px-3 px-1 text-grey bg-[rgba(185,179,179,0.04)] border-[0.5px] border-solid border-grey rounded-l">
+                <button
+                  className="md:py-[5px] md:px-3 px-1 text-grey bg-[rgba(185,179,179,0.04)] border-[0.5px] border-solid border-grey rounded-l"
+                  onClick={handleDecrease}
+                >
                   -
                 </button>
                 <span className="md:py-[5px] md:px-3 px-1.5 py-0 text-grey border-y-[0.5px] border-x-0 border-solid border-grey">
                   {item.quantity}
                 </span>
-                <button className="bg-[rgba(185,179,179,0.04)] text-grey md:py-[5px] md:px-[11px] px-[3px] border-[0.5px] border-solid border-grey rounded-r">
+                <button
+                  className="bg-[rgba(185,179,179,0.04)] text-grey md:py-[5px] md:px-[11px] px-[3px] border-[0.5px] border-solid border-grey rounded-r"
+                  onClick={handleIncrease}
+                >
                   +
                 </button>
               </div>
-              <p className="font-bold mt-3">${lineTotal}</p>
+              <p className="font-bold mt-3">{lineTotal}</p>
             </div>
           </div>
           <div className="flex flex-row items-center justify-between w-full">

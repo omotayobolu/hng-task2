@@ -11,7 +11,7 @@ import {
 export type CartItemType = {
   id: string;
   name: string;
-  current_price: number;
+  current_price: any;
   quantity: number;
 };
 
@@ -109,9 +109,16 @@ const useCartContext = (initCartState: CartStateType) => {
     return previousValue + cartItem.quantity;
   }, 0);
 
-  const totalPrice = state.cart.reduce((previousValue, cartItem) => {
-    return previousValue + (cartItem.quantity + cartItem.current_price + 50);
-  }, 0);
+  const totalPrice: string = new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+  }).format(
+    state.cart.reduce((previousValue, cartItem) => {
+      return (
+        previousValue + cartItem.quantity * cartItem.current_price[0]["NGN"][0]
+      );
+    }, 0)
+  );
 
   const cart = state.cart;
 
@@ -124,7 +131,7 @@ const initCartContextState: UseCartContextType = {
   dispatch: () => {},
   REDUCER_ACTIONS: REDUCER_ACTION_TYPE,
   totalItems: 0,
-  totalPrice: 0,
+  totalPrice: "",
   cart: [],
 };
 

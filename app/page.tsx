@@ -2,7 +2,6 @@
 import { useState } from "react";
 import useSWR from "swr";
 import Navbar from "@/components/Navbar";
-import ProductsData from "@/public/data/ProductsData";
 import { IoChevronBack } from "react-icons/io5";
 import { IoChevronForward } from "react-icons/io5";
 import Footer from "@/components/Footer";
@@ -38,7 +37,6 @@ export default function Home() {
   );
 
   const products: ProductType[] = data?.items || [];
-  console.log(products);
 
   const handleNextPage = () => {
     setPage((prevPage) => (prevPage < 3 ? prevPage + 1 : prevPage));
@@ -48,13 +46,13 @@ export default function Home() {
     setPage(Math.max(page - 1, 1));
   };
 
-  const filteredProducts =
-    selectedCategory === "All Products"
-      ? ProductsData
-      : ProductsData.filter(
-          (product) =>
-            product.category.toLowerCase() === selectedCategory.toLowerCase()
-        );
+  // const filteredProducts =
+  //   selectedCategory === "All Products"
+  //     ? ProductsData
+  //     : ProductsData.filter(
+  //         (product) =>
+  //           product.category.toLowerCase() === selectedCategory.toLowerCase()
+  //       );
 
   return (
     <main className="bg-white text-primary-black">
@@ -126,7 +124,7 @@ export default function Home() {
             </button>
           </div>
           <p className="font-light lg:block hidden">
-            <span className="font-normal">Showing </span>1-20 of 1000 results
+            <span className="font-normal">Showing </span>1-10 of 30 results
           </p>
         </div>
       </div>
@@ -200,7 +198,7 @@ export default function Home() {
           {isLoading && <p className="text-center">Loading....</p>}
           {error && (
             <p className="text-center text-red-600">
-              An error occured. Try again
+              Something went wrong. Try again
             </p>
           )}
           <div className="grid gap-x-[1.4375rem] gap-y-[1.125rem] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center">
