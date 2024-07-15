@@ -70,8 +70,8 @@ const CartItem = ({ item, REDUCER_ACTIONS, dispatch }: PropsType) => {
           height={141}
           className="border border-transparent rounded max-w-full"
         /> */}
-        <div className="flex flex-col justify-between md:pr-9 pr-6 pt-2.5 pb-2">
-          <div className="flex md:flex-row flex-col items-start md:space-x-[2.6875rem]">
+        <div className="flex flex-col justify-between md:px-9 px-6 pt-2.5 pb-2 w-full">
+          <div className="flex md:flex-row flex-col items-start md:justify-between">
             <p className="md:text-xl text-sm">
               {item.name.split(" - ").slice(0, -1).join(" - ")}
             </p>
