@@ -32,7 +32,7 @@ export default function Home() {
   const [page, setPage] = useState<number>(1);
 
   const { data, isLoading, error } = useSWR(
-    `https://timbu-get-all-products.reavdev.workers.dev/?organization_id=3bde8322367d4d9a86665d223bd2d4f8&reverse_sort=false&page=${page}&size=10&Appid=9BY9K0GZHTS2WEV&Apikey=530a32ca4ea14d5ab0e2d02841e8985020240712125048146690`,
+    `https://timbu-get-all-products.reavdev.workers.dev/?organization_id=${process.env.NEXT_PUBLIC_ORGANIZATION_ID}&reverse_sort=false&page=${page}&size=10&Appid=${process.env.NEXT_PUBLIC_APP_ID}&Apikey=${process.env.NEXT_PUBLIC_API_KEY}`,
     fetcher
   );
 

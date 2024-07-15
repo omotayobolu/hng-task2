@@ -65,7 +65,7 @@ const page = () => {
   };
 
   const { data, isLoading, error } = useSWR(
-    `https://timbu-get-single-product.reavdev.workers.dev/${productId}?organization_id=3bde8322367d4d9a86665d223bd2d4f8&Appid=9BY9K0GZHTS2WEV&Apikey=530a32ca4ea14d5ab0e2d02841e8985020240712125048146690`,
+    `https://timbu-get-single-product.reavdev.workers.dev/${productId}?organization_id=${process.env.NEXT_PUBLIC_ORGANIZATION_ID}&Appid=${process.env.NEXT_PUBLIC_APP_ID}&Apikey=${process.env.NEXT_PUBLIC_API_KEY}`,
     fetcher
   );
 
