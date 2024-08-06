@@ -18,11 +18,7 @@ export type CartItemType = {
 
 type CartStateType = { cart: CartItemType[] };
 
-const existingCart = localStorage.getItem("cart");
-
-const initCartState: CartStateType = existingCart
-  ? JSON.parse(existingCart)
-  : { cart: [] };
+const initCartState: CartStateType = { cart: [] };
 
 const REDUCER_ACTION_TYPE = {
   ADD: "ADD",
