@@ -10,14 +10,19 @@ import {
 
 export type CartItemType = {
   id: string;
-  name: string;
-  current_price: number;
+  title: string;
+  price: number;
   quantity: number;
+  image: string;
 };
 
 type CartStateType = { cart: CartItemType[] };
 
-const initCartState: CartStateType = { cart: [] };
+const existingCart = localStorage.getItem("cart");
+
+const initCartState: CartStateType = existingCart
+  ? JSON.parse(existingCart)
+  : { cart: [] };
 
 const REDUCER_ACTION_TYPE = {
   ADD: "ADD",
@@ -42,7 +47,7 @@ const reducer = (
       if (!action.payload) {
         throw new Error("action.payload missing in add action");
       }
-      const { id, name, current_price } = action.payload;
+      const { id, title, price, image } = action.payload;
       const filteredCart: CartItemType[] = state.cart.filter(
         (item) => item.id !== id
       );
@@ -54,7 +59,7 @@ const reducer = (
       const quantity: number = itemExists ? itemExists.quantity + 1 : 1;
       return {
         ...state,
-        cart: [...filteredCart, { id, name, current_price, quantity }],
+        cart: [...filteredCart, { id, title, price, quantity, image }],
       };
     }
     case REDUCER_ACTION_TYPE.REMOVE: {
@@ -109,12 +114,12 @@ const useCartContext = (initCartState: CartStateType) => {
     return previousValue + cartItem.quantity;
   }, 0);
 
-  const totalPrice: string = new Intl.NumberFormat("en-NG", {
+  const totalPrice: string = new Intl.NumberFormat("en", {
     style: "currency",
-    currency: "NGN",
+    currency: "USD",
   }).format(
     state.cart.reduce((previousValue, cartItem) => {
-      return previousValue + cartItem.quantity * cartItem.current_price;
+      return previousValue + cartItem.quantity * cartItem.price;
     }, 0)
   );
 

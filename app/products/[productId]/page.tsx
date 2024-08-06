@@ -21,10 +21,14 @@ const fetcher = async (url: string) => {
 };
 export type ProductType = {
   id: string;
-  product: string;
-  name: string;
-  current_price: any;
-  photos: any;
+  title: string;
+  price: number;
+  image: string;
+  category: {
+    name: string;
+    image: string;
+  };
+  description: string;
 };
 
 const page = () => {
@@ -65,14 +69,14 @@ const page = () => {
   };
 
   const { data, isLoading, error } = useSWR(
-    `https://timbu-get-single-product.reavdev.workers.dev/${productId}?organization_id=${process.env.NEXT_PUBLIC_ORGANIZATION_ID}&Appid=${process.env.NEXT_PUBLIC_APP_ID}&Apikey=${process.env.NEXT_PUBLIC_API_KEY}`,
+    `https://api.escuelajs.co/api/v1/products/${productId}`,
     fetcher
   );
 
-  const price = new Intl.NumberFormat("en-NG", {
+  const price = new Intl.NumberFormat("en", {
     style: "currency",
-    currency: "NGN",
-  }).format(data?.current_price);
+    currency: "USD",
+  }).format(data?.price);
 
   return (
     <section>
@@ -85,9 +89,7 @@ const page = () => {
           <IoMdArrowBack />
           <p className="text-grey">
             Product/
-            <span className="text-secondary-black">
-              {data?.name.split("-").pop()}
-            </span>
+            <span className="text-secondary-black">{data?.title}</span>
           </p>
         </div>
         {isLoading && <p className="text-center">Loading....</p>}
@@ -100,18 +102,18 @@ const page = () => {
           <div className="mt-4 w-full flex md:flex-row flex-col items-start md:space-y-0 md:space-x-8 space-y-10">
             <div className="md:w-[50%] w-full md:h-[500px] h-[300px] relative">
               <Image
-                src={`https://api.timbu.cloud/images/${data?.photos[0]?.url}`}
-                alt={data?.name}
+                src={data?.category.image}
+                alt={data?.title}
                 fill
                 className="max-w-full object-cover"
               />
             </div>
             <div className="md:w-[50%]">
               <span className="md:text-xl text-sm uppercase text-grey font-normal">
-                {data?.name.split("-").pop()}
+                {data?.category.name}
               </span>
               <h2 className="font-light md:text-[2rem] md:leading-[3.12625rem]  text-xl md:mt-0 mt-2.5">
-                {data?.name.split(" - ").slice(0, -1).join(" - ")}
+                {data?.title}
               </h2>
               <span className="text-2xl font-bold">{price}</span>
               <p className="text-sm font-normal text-[rgba(79,79,79,0.72)] md:mt-[1.125rem] mt-1">

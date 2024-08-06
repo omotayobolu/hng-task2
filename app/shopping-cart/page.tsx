@@ -21,19 +21,19 @@ const page = () => {
   const tax: number = 0.01 * subTotal;
   const totalPriceWithTax = subTotal + tax;
 
-  const subTotalFormatted = new Intl.NumberFormat("en-NG", {
+  const subTotalFormatted = new Intl.NumberFormat("en", {
     style: "currency",
-    currency: "NGN",
+    currency: "USD",
   }).format(subTotal);
 
-  const taxFormatted = new Intl.NumberFormat("en-NG", {
+  const taxFormatted = new Intl.NumberFormat("en", {
     style: "currency",
-    currency: "NGN",
+    currency: "USD",
   }).format(tax);
 
-  const totalPriceFormatted = new Intl.NumberFormat("en-NG", {
+  const totalPriceFormatted = new Intl.NumberFormat("en", {
     style: "currency",
-    currency: "NGN",
+    currency: "USD",
   }).format(totalPriceWithTax);
 
   const clearCart = () => {

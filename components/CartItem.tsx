@@ -14,10 +14,11 @@ type PropsType = {
 };
 
 const CartItem = ({ item, REDUCER_ACTIONS, dispatch }: PropsType) => {
-  const lineTotal: string = new Intl.NumberFormat("en-NG", {
+  const lineTotal: string = new Intl.NumberFormat("en", {
     style: "currency",
-    currency: "NGN",
-  }).format(item.quantity * item.current_price);
+    currency: "USD",
+  }).format(item.quantity * item.price);
+  console.log(item);
 
   const handleDecrease = () => {
     if (item.quantity > 1) {
@@ -27,6 +28,22 @@ const CartItem = ({ item, REDUCER_ACTIONS, dispatch }: PropsType) => {
           ...item,
           quantity: item.quantity - 1,
         },
+      });
+    } else {
+      dispatch({
+        type: REDUCER_ACTIONS.REMOVE,
+        payload: item,
+      });
+      toast("Item removed from cart", {
+        position: "top-center",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        type: "success",
       });
     }
   };
@@ -63,18 +80,16 @@ const CartItem = ({ item, REDUCER_ACTIONS, dispatch }: PropsType) => {
   return (
     <div className="md:px-[7px] md:py-[15px] py-[] border border-solid border-[rgba(79,79,79,0.27)] rounded">
       <div className="flex flex-row space-x-[0.8125rem]">
-        {/* <Image
-          src={image}
-          alt=""
+        <Image
+          src={item.image}
+          alt={item.title}
           width={154}
           height={141}
           className="border border-transparent rounded max-w-full"
-        /> */}
+        />
         <div className="flex flex-col justify-between md:px-9 px-6 pt-2.5 pb-2 w-full">
           <div className="flex md:flex-row flex-col items-start md:justify-between">
-            <p className="md:text-xl text-sm">
-              {item.name.split(" - ").slice(0, -1).join(" - ")}
-            </p>
+            <p className="md:text-xl text-sm">{item.title}</p>
             <div className="md:w-auto w-full flex flex-row items-center md:space-x-[2.6875rem] md:justify-normal justify-between">
               <div className="md:mt-4 mt-2.5 text-xl flex flex-row items-center text-grey">
                 <button
@@ -96,11 +111,7 @@ const CartItem = ({ item, REDUCER_ACTIONS, dispatch }: PropsType) => {
               <p className="font-bold mt-3">{lineTotal}</p>
             </div>
           </div>
-          <div className="flex flex-row items-center justify-between w-full">
-            <div className="flex flex-col md:space-y-2 space-y-1">
-              <span className="text-sm font-light">Size: Medium</span>
-              <span className="text-sm font-light">Colour: Black</span>
-            </div>
+          <div className="flex flex-row items-center justify-end w-full">
             <button
               className="flex flex-row items-center text-[#B82707]"
               onClick={onRemoveFromCart}
