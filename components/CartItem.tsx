@@ -87,11 +87,11 @@ const CartItem = ({ item, REDUCER_ACTIONS, dispatch }: PropsType) => {
           height={141}
           className="border border-transparent rounded max-w-full"
         />
-        <div className="flex flex-col justify-between md:px-9 px-6 pt-2.5 pb-2 w-full">
-          <div className="flex md:flex-row flex-col items-start md:justify-between">
+        <div className="flex flex-col justify-between px-4 pb-2 w-full">
+          <div className="flex md:flex-row flex-col items-start md:justify-between space-x-2">
             <p className="md:text-xl text-sm">{item.title}</p>
             <div className="md:w-auto w-full flex flex-row items-center md:space-x-[2.6875rem] md:justify-normal justify-between">
-              <div className="md:mt-4 mt-2.5 text-xl flex flex-row items-center text-grey">
+              <div className=" text-xl flex flex-row items-center text-grey">
                 <button
                   className="md:py-[5px] md:px-3 px-1 text-grey bg-[rgba(185,179,179,0.04)] border-[0.5px] border-solid border-grey rounded-l"
                   onClick={handleDecrease}
