@@ -1,3 +1,4 @@
+"use client";
 const PrimaryButton = ({ children, onClick, disabled, className }: any) => {
   return (
     <button

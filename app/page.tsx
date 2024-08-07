@@ -1,6 +1,6 @@
 "use client";
-import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
 import Navbar from "@/components/Navbar";
 import { IoChevronBack } from "react-icons/io5";

@@ -79,7 +79,7 @@ const CartItem = ({ item, REDUCER_ACTIONS, dispatch }: PropsType) => {
   };
 
   return (
-    <div className="md:px-[7px] md:py-[15px] py-[] border border-solid border-[rgba(79,79,79,0.27)] rounded">
+    <div className="md:px-[7px] md:py-[15px] border border-solid border-[rgba(79,79,79,0.27)] rounded">
       <div className="flex flex-row space-x-[0.8125rem]">
         <Image
           src={item.image}
@@ -89,8 +89,8 @@ const CartItem = ({ item, REDUCER_ACTIONS, dispatch }: PropsType) => {
           className="border border-transparent rounded max-w-full"
         />
         <div className="flex flex-col justify-between px-4 pb-2 w-full">
-          <div className="flex md:flex-row flex-col items-start md:justify-between space-x-2">
-            <p className="md:text-xl text-sm">{item.title}</p>
+          <div className="flex md:flex-row flex-col items-start md:justify-between md:space-x-2 space-y-2">
+            <p className="md:text-xl text-sm md:mt-0 mt-2">{item.title}</p>
             <div className="md:w-auto w-full flex flex-row items-center md:space-x-[2.6875rem] md:justify-normal justify-between">
               <div className=" text-xl flex flex-row items-center text-grey">
                 <button
@@ -109,7 +109,7 @@ const CartItem = ({ item, REDUCER_ACTIONS, dispatch }: PropsType) => {
                   +
                 </button>
               </div>
-              <p className="font-bold mt-3">{lineTotal}</p>
+              <p className="font-bold md:mt-3">{lineTotal}</p>
             </div>
           </div>
           <div className="flex flex-row items-center justify-end w-full">
