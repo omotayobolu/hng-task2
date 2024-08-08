@@ -71,17 +71,6 @@ export default function Home() {
       <div className=" bg-cover bg-center h-[279px] w-full hero-bg bg-blend-overlay"></div>
       <div className="mt-[2rem]">
         <div className="flex lg:flex-row flex-col lg:items-center lg:space-y-0 space-y-6 items-start justify-between md:mx-[3.75%] mx-[4.2%]">
-          {/* <div className="flex flex-row items-center space-x-[1.625rem]">
-            <p>Sort by:</p>
-            <select
-              name="sort"
-              id="sort"
-              className="py-[0.625rem] px-[0.5625rem] pr-[1.1875rem] border-[0.5px] border-solid border-[rgba(79,79,79,0.27)] rounded-lg text-secondary-black"
-            >
-              <option value="Low to High">Low to High</option>
-              <option value="High to Low">High to Low</option>
-            </select>
-          </div> */}
           <div className="flex flex-row items-center lg:space-x-8 space-x-2">
             <Link
               href="/"
@@ -116,8 +105,8 @@ export default function Home() {
       </div>
       <div className="mt-[2.5rem] md:mx-[3.125%] mx-[6%] flex flex-row gap-[2.0625rem]">
         <div className="flex flex-col w-full">
-          {!products && !loadingProducts && (
-            <p className="text-center">No more products! Check back later</p>
+          {filteredProducts?.length === 0 && !loadingProducts && (
+            <p className="text-center">No products! Check back later.</p>
           )}
           {loadingProducts && <p className="text-center">Loading....</p>}
           {productsError && (
@@ -125,7 +114,7 @@ export default function Home() {
               Something went wrong. Try again
             </p>
           )}
-          <div className="grid gap-x-[1.4375rem] gap-y-[1.125rem] grid-cols-[repeat(auto-fit,minmax(279px,1fr))] place-items-center">
+          <div className="grid gap-x-[1.4375rem] gap-y-[1.125rem] grid-cols-[repeat(auto-fill,minmax(279px,1fr))] place-items-center">
             {filteredProducts?.map((product: ProductType) => (
               <Product
                 product={product}
@@ -135,49 +124,51 @@ export default function Home() {
               />
             ))}
           </div>
-          <div className="mt-[4.3125rem] md:flex hidden flex-row items-center justify-center gap-5 w-full">
-            <Link
-              href={`?offset=${offset - 10}&limit=10`}
-              className={`w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-grey px-5 py-4 ${
-                offset === 0 && "opacity-20 cursor-not-allowed"
-              }`}
-              onClick={(e) => {
-                if (offset === 0) {
-                  e.preventDefault();
-                }
-              }}
-            >
-              <IoChevronBack />
-            </Link>
-            <Link
-              href={`?offset=0&limit=10`}
-              className={`w-[3.125rem] h-[3.125rem] rounded-md  px-5 py-4 ${
-                offset === 0
-                  ? "bg-primary-orange text-[#fdfdfd]"
-                  : "border border-solid border-grey"
-              } `}
-            >
-              1
-            </Link>
-            <Link
-              href={`?offset=10&limit=10`}
-              className={`w-[3.125rem] h-[3.125rem] rounded-md  px-5 py-4 ${
-                offset === 10
-                  ? "bg-primary-orange text-[#fdfdfd]"
-                  : "border border-solid border-grey"
-              } `}
-            >
-              2
-            </Link>
-            <Link
-              href={`?offset=${offset + 10}&limit=10`}
-              className={`w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-grey px-5 py-4 ${
-                offset === 10 && "opacity-20 cursor-not-allowed"
-              } `}
-            >
-              <IoChevronForward />
-            </Link>
-          </div>
+          {filteredProducts?.length > 9 && (
+            <div className="mt-[4.3125rem] flex flex-row items-center justify-center gap-5 w-full">
+              <Link
+                href={`?offset=${offset - 10}&limit=10`}
+                className={`w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-grey px-5 py-4 ${
+                  offset === 0 && "opacity-20 cursor-not-allowed"
+                }`}
+                onClick={(e) => {
+                  if (offset === 0) {
+                    e.preventDefault();
+                  }
+                }}
+              >
+                <IoChevronBack />
+              </Link>
+              <Link
+                href={`?offset=0&limit=10`}
+                className={`w-[3.125rem] h-[3.125rem] rounded-md  px-5 py-4 ${
+                  offset === 0
+                    ? "bg-primary-orange text-[#fdfdfd]"
+                    : "border border-solid border-grey"
+                } `}
+              >
+                1
+              </Link>
+              <Link
+                href={`?offset=10&limit=10`}
+                className={`w-[3.125rem] h-[3.125rem] rounded-md  px-5 py-4 ${
+                  offset === 10
+                    ? "bg-primary-orange text-[#fdfdfd]"
+                    : "border border-solid border-grey"
+                } `}
+              >
+                2
+              </Link>
+              <Link
+                href={`?offset=${offset + 10}&limit=10`}
+                className={`w-[3.125rem] h-[3.125rem] rounded-md border border-solid border-grey px-5 py-4 ${
+                  offset === 10 && "opacity-20 cursor-not-allowed"
+                } `}
+              >
+                <IoChevronForward />
+              </Link>
+            </div>
+          )}
         </div>
       </div>
       <div className="mt-[5.5625rem]">

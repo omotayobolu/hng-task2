@@ -75,6 +75,7 @@ const page = () => {
             </button>
           ) : null}
         </div>
+        {!cart && <p>Loading...</p>}
         {cart.length ? (
           <div className="w-full flex lg:flex-row flex-col items-start lg:space-y-0 space-y-[3.6875rem] space-x-0 lg:space-x-[1.375rem] mt-8">
             <div className="lg:w-[55%] w-full flex flex-col space-y-[22px]">

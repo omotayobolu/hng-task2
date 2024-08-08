@@ -18,7 +18,17 @@ export type CartItemType = {
 
 type CartStateType = { cart: CartItemType[] };
 
-const initCartState: CartStateType = { cart: [] };
+const isBrowser = typeof window !== "undefined";
+
+const getCartStateFromLocalStorage = (): CartStateType => {
+  if (isBrowser) {
+    const cart = localStorage.getItem("cart");
+    return cart ? JSON.parse(cart) : { cart: [] };
+  }
+  return { cart: [] };
+};
+
+const initCartState = getCartStateFromLocalStorage();
 
 const REDUCER_ACTION_TYPE = {
   ADD: "ADD",
@@ -34,16 +44,22 @@ export type ReducerAction = {
   payload?: CartItemType;
 };
 
+const saveCartToLocalStorage = (state: CartStateType) => {
+  localStorage.setItem("cart", JSON.stringify(state));
+};
+
 const reducer = (
   state: CartStateType,
   action: ReducerAction
 ): CartStateType => {
+  let newState: CartStateType;
+
   switch (action.type) {
     case REDUCER_ACTION_TYPE.ADD: {
       if (!action.payload) {
         throw new Error("action.payload missing in add action");
       }
-      const { id, title, price, image } = action.payload;
+      const { id, title, price, image, quantity } = action.payload;
       const filteredCart: CartItemType[] = state.cart.filter(
         (item) => item.id !== id
       );
@@ -52,11 +68,17 @@ const reducer = (
         (item) => item.id === id
       );
 
-      const quantity: number = itemExists ? itemExists.quantity + 1 : 1;
-      return {
+      const updatedQuantity: number = itemExists
+        ? itemExists.quantity + quantity
+        : quantity;
+      newState = {
         ...state,
-        cart: [...filteredCart, { id, title, price, quantity, image }],
+        cart: [
+          ...filteredCart,
+          { id, title, price, quantity: updatedQuantity, image },
+        ],
       };
+      break;
     }
     case REDUCER_ACTION_TYPE.REMOVE: {
       if (!action.payload) {
@@ -67,7 +89,8 @@ const reducer = (
         (item) => item.id !== id
       );
 
-      return { ...state, cart: [...filteredCart] };
+      newState = { ...state, cart: [...filteredCart] };
+      break;
     }
     case REDUCER_ACTION_TYPE.QUANTITY: {
       if (!action.payload) {
@@ -89,14 +112,18 @@ const reducer = (
         (item) => item.id !== id
       );
 
-      return { ...state, cart: [...filteredCart, updatedItem] };
+      newState = { ...state, cart: [...filteredCart, updatedItem] };
+      break;
     }
     case REDUCER_ACTION_TYPE.CLEAR_ALL: {
-      return { ...state, cart: [] };
+      newState = { ...state, cart: [] };
+      break;
     }
     default:
       throw new Error("Unidentified reducer action type");
   }
+  saveCartToLocalStorage(newState);
+  return newState;
 };
 
 const useCartContext = (initCartState: CartStateType) => {
