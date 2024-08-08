@@ -19,7 +19,6 @@ const CartItem = ({ item, REDUCER_ACTIONS, dispatch }: PropsType) => {
     style: "currency",
     currency: "USD",
   }).format(item.quantity * item.price);
-  console.log(item);
 
   const handleDecrease = () => {
     if (item.quantity > 1) {

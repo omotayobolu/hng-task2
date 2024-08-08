@@ -4,6 +4,7 @@ import LocalFont from "next/font/local";
 import "./globals.css";
 import ToastProvider from "@/components/ToastContainer";
 import { CartProvider } from "@/context/CartProvider";
+import { SearchProvider } from "@/context/SearchProvider";
 
 const elmessiri = El_Messiri({
   subsets: ["latin"],
@@ -52,7 +53,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${elmessiri.variable} ${aeonik.className}`}>
         <ToastProvider>
-          <CartProvider>{children}</CartProvider>
+          <CartProvider>
+            <SearchProvider>{children}</SearchProvider>
+          </CartProvider>
         </ToastProvider>
       </body>
     </html>
